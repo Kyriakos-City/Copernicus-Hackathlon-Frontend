@@ -107,11 +107,15 @@
         <v-card-text>
           <div style="height:500px">
             <h1 class="title">
-              After checking and comparing the input parameters with the system 
-              This parcel named <h2>{{ repName }} </h2> <v-divider />
-              located at <h2>{{ repCoords }} </h2>
-              is <h2>{{ repStatus ? "capable" : "not capable" }}</h2>of appying best
-              practices when using <h2>{{ repCorp }}</h2>
+              After checking and comparing the input parameters with the system
+              This parcel named
+              <h2>{{ repName }}</h2>
+              <v-divider /> located at
+              <h2>{{ repCoords }}</h2>
+              is
+              <h2>{{ repStatus ? "capable" : "not capable" }}</h2>
+              of appying best practices when using
+              <h2>{{ repCorp }}</h2>
               as a crop.
             </h1>
           </div>
@@ -228,13 +232,15 @@ export default {
     },
     async getFarms() {
       try {
-        const gottenFarms = await axios2.get(
-          "http://localhost:8000/post/farms/"
-        );
+        const provider =
+          process.env.NODE_ENV == "production"
+            ? ""
+            : "http://localhost:8000/post/farms/";
+        const gottenFarms = await axios2.get(provider);
         this.farms = gottenFarms.data;
-        console.log(gottenFarms);
+        //console.log(gottenFarms);
       } catch (error) {
-        console.log(error);
+        //console.log(error);
       }
     }
     /* async sendCords() {

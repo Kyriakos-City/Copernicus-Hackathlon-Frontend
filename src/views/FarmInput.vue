@@ -1,7 +1,9 @@
 <template>
   <v-dialog v-model="farmInputDialog" persistent max-width="600px">
     <template v-slot:activator="{ on }">
-      <v-btn v-on="on" fab x-large><v-icon x-large>mdi-plus-circle-outline</v-icon> </v-btn>
+      <v-btn v-on="on" fab x-large
+        ><v-icon x-large>mdi-plus-circle-outline</v-icon>
+      </v-btn>
     </template>
     <v-card>
       <v-card-title>
@@ -50,7 +52,7 @@
           <v-btn color="error" class="mr-4" @click="reset">
             Reset
           </v-btn>
-          <v-btn class="mr-4" @click="farmInputDialog=false">
+          <v-btn class="mr-4" @click="farmInputDialog = false">
             Close
           </v-btn>
         </v-form>
@@ -100,27 +102,28 @@ export default {
     validate() {
       if (this.$refs.form.validate()) {
         this.submit();
-        
-        
       }
     },
     async submit() {
       try {
-        const provider = process.env.NODE_ENV == 'production' ? "" : "http://localhost:8000/post/farms/";
-        console.log(provider);
-        const res = await axios.post(provider, [{
-          name: this.name,
-          type: this.select,
-          coords: this.edited === null ? this.paths[0] : this.edited[0],
-        }]
-        
-        );
-        
-        console.log(res);
+        const provider =
+          process.env.NODE_ENV == "production"
+            ? ""
+            : "http://localhost:8000/post/farms/";
+        //console.log(provider);
+        await axios.post(provider, [
+          {
+            name: this.name,
+            type: this.select,
+            coords: this.edited === null ? this.paths[0] : this.edited[0]
+          }
+        ]);
+
+        //console.log(res);
         this.farmInputDialog = false;
-        this.$emit('refreshFarms');
+        this.$emit("refreshFarms");
       } catch (error) {
-        console.log(error);
+        //console.log(error);
       }
     },
     reset() {
