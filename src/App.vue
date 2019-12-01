@@ -234,8 +234,9 @@ export default {
       try {
         const provider =
           process.env.NODE_ENV == "production"
-            ? ""
-            : "http://localhost:8000/post/farms/";
+            ? "https://farmhub-hackathon.herokuapp.com"
+            //: "http://localhost:8000/post/farms/";
+            : "http://10.0.0.93:8000/post/farms/"
         const gottenFarms = await axios2.get(provider);
         this.farms = gottenFarms.data;
         //console.log(gottenFarms);

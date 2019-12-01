@@ -1,5 +1,9 @@
 # Farmhub
 
+## Live Demo
+
+You can access a live demo at https://farmhub-hackathlon.netlify.com/
+
 ## Pre Requirments
 
 You need node.js installed in order to run or complile this web application
@@ -19,10 +23,6 @@ With the backend running you use this command 'npm run serve' in order to connec
 This command is use for complie and deployment 'npm run build'
 ```
 
-### Lints and fixes files
-```
-npm run lint
-```
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
