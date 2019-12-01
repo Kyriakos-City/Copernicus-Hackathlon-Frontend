@@ -1,18 +1,22 @@
-# frontend
+# Farmhub
 
-## Project setup
+## Pre Requirments
+
+You need node.js installed in order to run or complile this web application
+
+## Step 1 : Project setup
 ```
-npm install
+Clone the project switch to the folder and run 'npm install' to install all the required libraries.
 ```
 
-### Compiles and hot-reloads for development
+### Step 2: Run the development server and hot-reload.
 ```
-npm run serve
+With the backend running you use this command 'npm run serve' in order to connect to the local server and check the web app fnctionality
 ```
 
 ### Compiles and minifies for production
 ```
-npm run build
+This command is use for complie and deployment 'npm run build'
 ```
 
 ### Lints and fixes files

@@ -29,14 +29,14 @@
     <v-content>
       <v-container class="fill-height main-background" fluid>
         <v-row align="center" justify="center" class="align-self-start">
-          <v-col cols="12"><h1>Welcome,</h1></v-col>
+          <v-col cols="12"><h1>Welcome, Admin</h1></v-col>
           <v-col cols="12"><v-divider /></v-col>
           <v-col cols="12" align="center" justify="center">
             <FarmInput v-on:refreshFarms="getFarms" />
           </v-col>
           <v-col cols-12>
             <v-row align="center" justify="center" class="align-self-start">
-              <v-col cols="12"><h3>Your farms</h3></v-col>
+              <v-col cols="12"><h3>Your parcels</h3></v-col>
               <v-col cols="12"><v-divider /></v-col>
               <v-col v-for="n in farms" :key="n.index" cols="3" class="shrink">
                 <v-card class="mx-auto">
@@ -63,7 +63,7 @@
                     </v-list-item>
                     <v-list-item>
                       <v-list-item-content>
-                        <h4>Sustainable :</h4>
+                        <h4>Capable of sustaibable practices:</h4>
                       </v-list-item-content>
                       <v-list-item-icon>
                         <v-icon large :color="n.sustainable ? 'green' : 'red'">
@@ -86,7 +86,11 @@
                   :series="series"
                 />-->
                   </v-card-text>
-                  <v-card-actions> </v-card-actions>
+                  <v-card-actions class="align-center">
+                    <v-btn color="red lighten-2" dark @click="showReport(n)">
+                      Parcel Report
+                    </v-btn>
+                  </v-card-actions>
                 </v-card>
               </v-col>
             </v-row>
@@ -94,12 +98,42 @@
         </v-row>
       </v-container>
     </v-content>
+    <v-dialog v-model="farmReport" width="500" height="500">
+      <v-card>
+        <v-card-title class="headline" primary-title>
+          Parcel Report
+        </v-card-title>
+
+        <v-card-text>
+          <div style="height:500px">
+            <h1 class="title">
+              After checking and comparing the input parameters with the system 
+              This parcel named <h2>{{ repName }} </h2> <v-divider />
+              located at <h2>{{ repCoords }} </h2>
+              is <h2>{{ repStatus ? "capable" : "not capable" }}</h2>of appying best
+              practices when using <h2>{{ repCorp }}</h2>
+              as a crop.
+            </h1>
+          </div>
+        </v-card-text>
+
+        <v-divider></v-divider>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="primary" text @click="farmReport = false">
+            Close
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-app>
 </template>
 
 <script>
 import axios2 from "axios";
 import FarmInput from "@/views/FarmInput";
+//import FarmReport from "@/views/FarmReport";
 
 export default {
   components: {
@@ -109,8 +143,13 @@ export default {
     source: String
   },
   data: () => ({
+    farmReport: false,
     farms: [],
     drawer: null,
+    repName: null,
+    repCoords: null,
+    repStatus: null,
+    repCorp: null,
     series: [
       {
         name: "Desktops",
@@ -179,10 +218,18 @@ export default {
     this.getFarms();
   },
   methods: {
+    showReport(rep) {
+      this.repName = rep.farm_name;
+      this.repCoords = rep.farm_center;
+      this.repCorp = rep.corp_type;
+      this.repStatus = rep.sustainable;
+
+      this.farmReport = true;
+    },
     async getFarms() {
       try {
         const gottenFarms = await axios2.get(
-          "http://10.0.0.93:8000/post/farms/"
+          "http://localhost:8000/post/farms/"
         );
         this.farms = gottenFarms.data;
         console.log(gottenFarms);

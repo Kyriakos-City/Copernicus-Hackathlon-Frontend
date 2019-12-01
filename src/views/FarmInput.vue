@@ -100,13 +100,13 @@ export default {
     validate() {
       if (this.$refs.form.validate()) {
         this.submit();
-        this.farmInputDialog = false;
+        
         
       }
     },
     async submit() {
       try {
-        const provider = process.env.NODE_ENV == 'production' ? "" : "http://10.0.0.93:8000/post/farms/";
+        const provider = process.env.NODE_ENV == 'production' ? "" : "http://localhost:8000/post/farms/";
         console.log(provider);
         const res = await axios.post(provider, [{
           name: this.name,
@@ -115,7 +115,9 @@ export default {
         }]
         
         );
+        
         console.log(res);
+        this.farmInputDialog = false;
         this.$emit('refreshFarms');
       } catch (error) {
         console.log(error);
